@@ -119,7 +119,7 @@ class _TranslatePageState extends State<TranslatePage> {
     return rows;
   }
 
-  Widget tRowToRow(TRow tRow, Size size, int index, TextStyle titleStyle) {
+  Widget tRowToRow(TRow tRow, int index, TextStyle titleStyle) {
     List<DataRow> rows = createData(tRow);
     return Container(
       color: index.isEven ? Colors.blue[50] : Colors.grey[100],
@@ -205,7 +205,6 @@ class _TranslatePageState extends State<TranslatePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     TextStyle titleStyle = new TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
 
     return Scaffold(
@@ -216,7 +215,7 @@ class _TranslatePageState extends State<TranslatePage> {
       body: ListView.builder(
         itemCount: trows.length,
         itemBuilder: (context, index) {
-          return tRowToRow(trows[index], size, index, titleStyle);
+          return tRowToRow(trows[index], index, titleStyle);
         },
       ),
       floatingActionButton: FloatingActionButton(
