@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tirgumim/UI/fullTable.dart';
 import 'package:tirgumim/UI/translatePage.dart';
 
 void main() {
@@ -58,8 +59,8 @@ class MyHomePage extends StatelessWidget {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            TranslatePage(0, "פר תמונה"),
-            TranslatePage(1, "טבלה כוללת"),
+            TranslatePage(),
+            FullTable(),
           ],
         ),
       ),

@@ -3,20 +3,18 @@ import 'package:tirgumim/models/tRow.dart';
 import 'package:tirgumim/widgets/camera.dart';
 
 class TranslatePage extends StatefulWidget {
-  TranslatePage(this.index, this.name);
-  final int index;
-  final String name;
-
   @override
   _TranslatePageState createState() => _TranslatePageState();
 }
 
 class _TranslatePageState extends State<TranslatePage> {
-  List<TRow> trows = [];
   TextEditingController _searchQueryController;
   TextEditingController _insertWordController;
-
   String searchQuery = "";
+
+  List<TRow> trows = []; // trowRows view
+
+  TextStyle titleStyle = new TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
 
   void initState() {
     super.initState();
@@ -65,62 +63,62 @@ class _TranslatePageState extends State<TranslatePage> {
     updateSearchQuery("");
   }
 
-  void _startEditMode(TRow words, int rowIndex, int cellIndex) {
+  void _startEditMode(TRow trowTable, int rowIndex, int cellIndex) {
     setState(() {
       _insertWordController.clear();
-      words.selectedRow = rowIndex;
-      words.selectedcell = cellIndex;
+      trowTable.selectedRow = rowIndex;
+      trowTable.selectedcell = cellIndex;
     });
   }
 
-  void endEdit(TRow words, int rowIndex, int cellIndex) {
+  void endEdit(TRow trowTable, int rowIndex, int cellIndex) {
     setState(() {
-      words.words[rowIndex][cellIndex] = _insertWordController.text;
+      trowTable.trowTable[rowIndex][cellIndex] = _insertWordController.text;
       _insertWordController.clear();
-      words.selectedRow = null;
-      words.selectedcell = null;
+      trowTable.selectedRow = null;
+      trowTable.selectedcell = null;
     });
   }
 
   List<DataRow> createData(TRow tRow) {
-    Map<int, Map<int, String>> words = tRow.words;
-    List<DataRow> rows = [];
-    for (var rowIndex in words.keys) {
+    Map<int, Map<int, String>> currentTable = tRow.trowTable;
+    List<DataRow> trowRows = [];
+    for (var rowIndex in currentTable.keys) {
       List<DataCell> cells = [];
       for (var cellIndex = 0; cellIndex < 6; cellIndex++) {
         if (cellIndex == 5) {
           cells.add(DataCell(
             Icon(Icons.delete_outline, color: Colors.red),
-            onTap: () => setState(() => words.remove(rowIndex)),
+            onTap: () => setState(() => currentTable.remove(rowIndex)),
           ));
         } else if (tRow.selectedRow == rowIndex && tRow.selectedcell == cellIndex) {
-          if (words[rowIndex].containsKey(cellIndex)) {
-            _insertWordController.text = words[rowIndex][cellIndex];
+          if (currentTable[rowIndex].containsKey(cellIndex)) {
+            _insertWordController.text = currentTable[rowIndex][cellIndex];
             cells.add(DataCell(TextField(
               controller: _insertWordController,
               autofocus: true,
-              onChanged: (query) => words[rowIndex][cellIndex] = query,
+              onChanged: (query) => currentTable[rowIndex][cellIndex] = query,
               onSubmitted: (query) => endEdit(tRow, rowIndex, cellIndex),
             )));
           } else
             cells.add(DataCell(TextField(
               controller: _insertWordController,
               autofocus: true,
-              onChanged: (query) => words[rowIndex][cellIndex] = query,
+              onChanged: (query) => currentTable[rowIndex][cellIndex] = query,
               onSubmitted: (query) => endEdit(tRow, rowIndex, cellIndex),
             )));
-        } else if (words[rowIndex].containsKey(cellIndex)) {
-          cells.add(DataCell(Text(words[rowIndex][cellIndex]), showEditIcon: true, onTap: () => _startEditMode(tRow, rowIndex, cellIndex)));
+        } else if (currentTable[rowIndex].containsKey(cellIndex)) {
+          cells.add(DataCell(Text(currentTable[rowIndex][cellIndex]), showEditIcon: true, onTap: () => _startEditMode(tRow, rowIndex, cellIndex)));
         } else
           cells.add(DataCell(Text("הוסף תרגום"), placeholder: true, showEditIcon: true, onTap: () => _startEditMode(tRow, rowIndex, cellIndex)));
       }
-      rows.add(new DataRow(cells: cells));
+      trowRows.add(new DataRow(cells: cells));
     }
-    return rows;
+    return trowRows;
   }
 
   Widget tRowToRow(TRow tRow, int index, TextStyle titleStyle) {
-    List<DataRow> rows = createData(tRow);
+    List<DataRow> trowRows = createData(tRow);
     return Container(
       color: index.isEven ? Colors.blue[50] : Colors.grey[100],
       padding: EdgeInsets.all(10),
@@ -150,7 +148,7 @@ class _TranslatePageState extends State<TranslatePage> {
                       DataColumn(label: Text('רוסית', style: titleStyle)),
                       DataColumn(label: SizedBox.shrink())
                     ],
-                    rows: rows),
+                    rows: trowRows),
                 SizedBox(
                   height: 10,
                 ),
@@ -171,7 +169,7 @@ class _TranslatePageState extends State<TranslatePage> {
                           label: Text("הוסף מילה לקבוצה"),
                           onPressed: () {
                             trows.forEach((element) => element.selectedRow = element.selectedcell = null);
-                            setState(() => tRow.words[tRow.words.length > 0 ? tRow.words.keys.last + 1 : 0] = {});
+                            setState(() => tRow.trowTable[tRow.trowTable.length > 0 ? tRow.trowTable.keys.last + 1 : 0] = {});
                           }),
                     ),
                     SizedBox(
@@ -205,8 +203,6 @@ class _TranslatePageState extends State<TranslatePage> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle titleStyle = new TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
-
     return Scaffold(
       appBar: AppBar(
         title: _buildSearchField(),
@@ -222,7 +218,7 @@ class _TranslatePageState extends State<TranslatePage> {
         child: Icon(Icons.add_to_queue),
         onPressed: () {
           trows.forEach((element) => element.selectedRow = element.selectedcell = null);
-          setState(() => trows.insert(0, new TRow(words: {})));
+          setState(() => trows.insert(0, new TRow(trowTable: {})));
         },
       ),
     );

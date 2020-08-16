@@ -2,7 +2,7 @@ class TRow {
   int id;
   String name;
   var image;
-  Map<int, Map<int, String>> words = {};
+  Map<int, Map<int, String>> trowTable = {};
   int selectedRow;
   int selectedcell;
 
@@ -15,7 +15,7 @@ class TRow {
     this.id,
     this.name,
     this.image = 'https://picsum.photos/250?image=9',
-    this.words,
+    this.trowTable,
     this.selectedRow,
     this.selectedcell,
   });
