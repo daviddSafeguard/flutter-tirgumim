@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tirgumim/UI/fullTable.dart';
+import 'package:tirgumim/UI/serverDataTable/paginatedDataTable.dart';
 import 'package:tirgumim/UI/translatePage.dart';
 
 void main() {
@@ -44,7 +45,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue[700],
@@ -52,6 +53,7 @@ class MyHomePage extends StatelessWidget {
             tabs: [
               Tab(text: 'פר תמונה'),
               Tab(text: 'טבלה כוללת'),
+              Tab(text: 'טבלת שרת'),
             ],
           ),
           title: Text(title),
@@ -61,6 +63,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             TranslatePage(),
             FullTable(),
+            ServerDataTable(),
           ],
         ),
       ),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tirgumim/models/tRow.dart';
-import 'package:tirgumim/widgets/camera.dart';
 
 class FullTable extends StatefulWidget {
   @override
