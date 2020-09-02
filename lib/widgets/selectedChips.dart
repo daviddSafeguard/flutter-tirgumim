@@ -26,7 +26,7 @@ class _SelectChipState extends State<SelectChip> {
           value.toString(),
           style: TextStyle(color: isSelected ? Colors.blue : Colors.blue[300]),
         ),
-        //backgroundColor: ColorManager().theme.fillColor,
+
         shape: StadiumBorder(
             side: BorderSide(
           color: Colors.blue[300],
