@@ -25,7 +25,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
       ),
       body: Column(
         children: [
-          ColumnChart(),
+          Container(width: 500, height: 300, child: ColumnChart()),
           // Expanded(
           //   child: Row(children: [
           //     Flexible(
