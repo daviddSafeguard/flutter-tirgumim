@@ -3,22 +3,22 @@ import 'package:tirgumim/models/user.dart';
 
 typedef OnRowSelect = void Function(int index);
 
-_showMaterialDialog(context) {
-  showDialog(
-      context: context,
-      builder: (_) => new AlertDialog(
-            title: new Text("Material Dialog"),
-            content: new Text("Hey! I'm Coflutter!"),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Close me!'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          ));
-}
+// _showMaterialDialog() {
+//   showDialog(
+//       context: context,
+//       builder: (_) => new AlertDialog(
+//             title: new Text("Material Dialog"),
+//             content: new Text("Hey! I'm Coflutter!"),
+//             actions: <Widget>[
+//               FlatButton(
+//                 child: Text('Close me!'),
+//                 onPressed: () {
+//                   Navigator.of(context).pop();
+//                 },
+//               )
+//             ],
+//           ));
+// }
 
 class UserDataTableSource extends DataTableSource {
   UserDataTableSource({
@@ -41,7 +41,7 @@ class UserDataTableSource extends DataTableSource {
 
     return DataRow.byIndex(
       index: index, // DONT MISS THIS
-      onSelectChanged: (context) => _showMaterialDialog,
+      onSelectChanged: (val) => () {}, //_showMaterialDialog,
       selected: true,
       cells: <DataCell>[
         DataCell(Text('${_user.id}')),

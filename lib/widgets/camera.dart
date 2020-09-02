@@ -15,6 +15,8 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
+  final picker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
@@ -22,7 +24,7 @@ class _CameraState extends State<Camera> {
 
   getImageFile() async {
     try {
-      final result = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+      final result = await picker.getImage(source: ImageSource.gallery);
       print(result.path);
       if (result != null && result.path != null) {
         setState(() {
