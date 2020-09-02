@@ -244,7 +244,7 @@ class _TranslatePageState extends State<TranslatePage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(tRow.epic ?? "סייפגארד"),
-      content: Text("This is my message."),
+      content: Text("This is my message.."),
       actions: [
         okButton,
       ],
