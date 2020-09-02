@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:tirgumim/UI/serverDataTable/dataTableSource.dart';
 import 'package:tirgumim/models/user.dart';
@@ -8,6 +10,7 @@ class ServerDataTable extends StatefulWidget {
 }
 
 class _ServerDataTableState extends State<ServerDataTable> {
+  Map<String, bool> selectedFilters = {"workers": false};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,17 +28,20 @@ class _ServerDataTableState extends State<ServerDataTable> {
             child: Row(children: [
               Flexible(
                 flex: 6,
-                child: GridView.builder(
-                  itemCount: 12,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Card(
-                      child: new GridTile(
-                        footer: new Text('name'),
-                        child: new Text('index'),
-                      ),
-                    );
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView.builder(
+                    itemCount: 12,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Card(
+                        child: new GridTile(
+                          footer: new Text('name'),
+                          child: new Text('index'),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Flexible(flex: 3, child: Container())
@@ -43,9 +49,31 @@ class _ServerDataTableState extends State<ServerDataTable> {
           ),
           PaginatedDataTable(
             columnSpacing: MediaQuery.of(context).size.width / 6,
-            showCheckboxColumn: true,
+            showCheckboxColumn: selectedFilters["workers"],
             rowsPerPage: 4,
-            header: Center(child: Text("הדר")),
+            header: Row(children: [
+              FilterChip(
+                showCheckmark: selectedFilters["workers"],
+
+                selected: selectedFilters["workers"],
+                label: new Text(
+                  "עובדים",
+                  style: TextStyle(color: selectedFilters["workers"] ? Colors.blue : Colors.blue[300]),
+                ),
+
+                shape: StadiumBorder(
+                    side: BorderSide(
+                  color: Colors.blue[300],
+                )),
+
+                // shape: StadiumBorder(side: BorderSide(color: Colors.blueGrey)),
+                onSelected: (bool bvalue) {
+                  setState(() {
+                    selectedFilters["workers"] = !selectedFilters["workers"];
+                  });
+                },
+              )
+            ]),
             columns: [
               DataColumn(label: Text("id")),
               DataColumn(label: Text("name")),
