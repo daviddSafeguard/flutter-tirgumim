@@ -14,7 +14,8 @@ class _TranslatePageState extends State<FullTable> {
   int fullTableRowIndex;
   int fullTableCellIndex;
 
-  TextStyle titleStyle = new TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
+  TextStyle titleStyle =
+      new TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
 
   void initState() {
     super.initState();
@@ -88,7 +89,8 @@ class _TranslatePageState extends State<FullTable> {
         if (cellIndex == 5) {
           cells.add(DataCell(
             CircleAvatar(
-              backgroundImage: NetworkImage('https://picsum.photos/250?image=9'),
+              backgroundImage:
+                  NetworkImage('https://picsum.photos/250?image=9'),
             ),
           ));
         } else if (cellIndex == 6) {
@@ -96,7 +98,8 @@ class _TranslatePageState extends State<FullTable> {
             Icon(Icons.delete_outline, color: Colors.red),
             onTap: () => setState(() => currentTable.remove(rowIndex)),
           ));
-        } else if (fullTableRowIndex == rowIndex && fullTableRowIndex == cellIndex) {
+        } else if (fullTableRowIndex == rowIndex &&
+            fullTableRowIndex == cellIndex) {
           if (currentTable[rowIndex].containsKey(cellIndex)) {
             _insertWordController.text = currentTable[rowIndex][cellIndex];
             cells.add(DataCell(TextField(
@@ -113,9 +116,14 @@ class _TranslatePageState extends State<FullTable> {
               onSubmitted: (query) => endEdit(rowIndex, cellIndex),
             )));
         } else if (currentTable[rowIndex].containsKey(cellIndex)) {
-          cells.add(DataCell(Text(currentTable[rowIndex][cellIndex]), showEditIcon: true, onTap: () => _startEditMode(rowIndex, cellIndex)));
+          cells.add(DataCell(Text(currentTable[rowIndex][cellIndex]),
+              showEditIcon: true,
+              onTap: () => _startEditMode(rowIndex, cellIndex)));
         } else
-          cells.add(DataCell(Text("הוסף תרגום"), placeholder: true, showEditIcon: true, onTap: () => _startEditMode(rowIndex, cellIndex)));
+          cells.add(DataCell(Text("הוסף תרגום"),
+              placeholder: true,
+              showEditIcon: true,
+              onTap: () => _startEditMode(rowIndex, cellIndex)));
       }
       trowRows.add(new DataRow(cells: cells));
     }
@@ -163,7 +171,9 @@ class _TranslatePageState extends State<FullTable> {
         child: Icon(Icons.add_to_queue),
         onPressed: () {
           fullTableCellIndex = fullTableRowIndex = null;
-          setState(() => fullTable[fullTable.length > 0 ? fullTable.keys.last + 1 : 0] = {});
+          setState(() =>
+              fullTable[fullTable.length > 0 ? fullTable.keys.last + 1 : 0] =
+                  {});
         },
       ),
     );
