@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:tirgumim/UI/serverDataTable/chart.dart';
 import 'package:tirgumim/UI/serverDataTable/dataTableSource.dart';
 import 'package:tirgumim/models/user.dart';
 
@@ -24,33 +25,34 @@ class _ServerDataTableState extends State<ServerDataTable> {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: Row(children: [
-              Flexible(
-                flex: 6,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.builder(
-                    itemCount: 12,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
-                    itemBuilder: (BuildContext context, int index) {
-                      return new Card(
-                        child: new GridTile(
-                          footer: new Text('name'),
-                          child: new Text('index'),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Flexible(flex: 3, child: Container())
-            ]),
-          ),
+          ColumnChart(),
+          // Expanded(
+          //   child: Row(children: [
+          //     Flexible(
+          //       flex: 6,
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: GridView.builder(
+          //           itemCount: 12,
+          //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
+          //           itemBuilder: (BuildContext context, int index) {
+          //             return new Card(
+          //               child: new GridTile(
+          //                 footer: new Text('name'),
+          //                 child: new Text('index'),
+          //               ),
+          //             );
+          //           },
+          //         ),
+          //       ),
+          //     ),
+          //     Flexible(flex: 3, child: ColumnChart())
+          //   ]),
+          // ),
           PaginatedDataTable(
             columnSpacing: MediaQuery.of(context).size.width / 6,
             showCheckboxColumn: selectedFilters["workers"],
-            rowsPerPage: 4,
+            rowsPerPage: 3,
             header: Row(children: [
               FilterChip(
                 showCheckmark: selectedFilters["workers"],
