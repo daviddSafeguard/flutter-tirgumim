@@ -28,13 +28,12 @@ class _ServerDataTableState extends State<ServerDataTable> {
           Expanded(
             child: Row(children: [
               Flexible(
-                flex: 6,
+                flex: 3,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 25),
                   child: GridView.builder(
-                    itemCount: 12,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 6),
+                    itemCount: 8,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
                     itemBuilder: (BuildContext context, int index) {
                       return new Card(
                         child: new GridTile(
@@ -47,19 +46,33 @@ class _ServerDataTableState extends State<ServerDataTable> {
                 ),
               ),
               Flexible(
-                flex: 3,
-                child: Container(
-                  width: 500,
-                  height: 300,
-                  child: ColumnChart(),
+                flex: 5,
+                child:
+                    //  Column(
+                    //   children: [
+                    Row(
+                  children: [
+                    ColumnChart(),
+                    ColumnChart(),
+                    ColumnChart(),
+                    ColumnChart(),
+                  ],
                 ),
+                //   Row(
+                //     children: [
+                //       ColumnChart(),
+                //       ColumnChart(),
+                //     ],
+                //   ),
+                // ],
+                //   ),
               )
             ]),
           ),
           PaginatedDataTable(
             columnSpacing: MediaQuery.of(context).size.width / 6,
             showCheckboxColumn: selectedFilters["workers"],
-            rowsPerPage: 3,
+            rowsPerPage: 5,
             header: Row(children: [
               FilterChip(
                 showCheckmark: selectedFilters["workers"],
@@ -67,10 +80,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
                 selected: selectedFilters["workers"],
                 label: new Text(
                   "עובדים",
-                  style: TextStyle(
-                      color: selectedFilters["workers"]
-                          ? Colors.blue
-                          : Colors.blue[300]),
+                  style: TextStyle(color: selectedFilters["workers"] ? Colors.blue : Colors.blue[300]),
                 ),
 
                 shape: StadiumBorder(
@@ -97,78 +107,18 @@ class _ServerDataTableState extends State<ServerDataTable> {
             source: UserDataTableSource(
               onRowSelect: (index) => print(index),
               userData: [
-                User(
-                    id: 1,
-                    name: "1",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 2,
-                    name: "2",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 3,
-                    name: "3",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 4,
-                    name: "4",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 5,
-                    name: "5",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 6,
-                    name: "6",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 7,
-                    name: "7",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 8,
-                    name: "8",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 9,
-                    name: "9",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 10,
-                    name: "10",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 11,
-                    name: "11",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin"),
-                User(
-                    id: 12,
-                    name: "12",
-                    email: "a@a",
-                    phone: "1234567890",
-                    status: "admin")
+                User(id: 1, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 2, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 3, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
+                User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
               ],
             ),
           ),
