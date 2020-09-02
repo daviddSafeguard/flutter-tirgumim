@@ -30,10 +30,30 @@ class _ServerDataTableState extends State<ServerDataTable> {
         source: UserDataTableSource(
           onRowSelect: (index) => print(index),
           userData: [
-            User(id: 1, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
-            User(id: 2, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
-            User(id: 3, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
-            User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin")
+            User(
+                id: 1,
+                name: "1",
+                email: "a@a",
+                phone: "1234567890",
+                status: "admin"),
+            User(
+                id: 2,
+                name: "2",
+                email: "a@a",
+                phone: "1234567890",
+                status: "admin"),
+            User(
+                id: 3,
+                name: "3",
+                email: "a@a",
+                phone: "1234567890",
+                status: "admin"),
+            User(
+                id: 4,
+                name: "4",
+                email: "a@a",
+                phone: "1234567890",
+                status: "admin")
           ],
         ),
       ),

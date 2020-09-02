@@ -14,7 +14,8 @@ class _TranslatePageState extends State<TranslatePage> {
 
   List<TRow> trows = []; // trowRows view
 
-  TextStyle titleStyle = new TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
+  TextStyle titleStyle =
+      new TextStyle(fontWeight: FontWeight.bold, color: Colors.black);
 
   void initState() {
     super.initState();
@@ -91,7 +92,8 @@ class _TranslatePageState extends State<TranslatePage> {
             Icon(Icons.delete_outline, color: Colors.red),
             onTap: () => setState(() => currentTable.remove(rowIndex)),
           ));
-        } else if (tRow.selectedRow == rowIndex && tRow.selectedcell == cellIndex) {
+        } else if (tRow.selectedRow == rowIndex &&
+            tRow.selectedcell == cellIndex) {
           if (currentTable[rowIndex].containsKey(cellIndex)) {
             _insertWordController.text = currentTable[rowIndex][cellIndex];
             cells.add(DataCell(TextField(
@@ -108,9 +110,14 @@ class _TranslatePageState extends State<TranslatePage> {
               onSubmitted: (query) => endEdit(tRow, rowIndex, cellIndex),
             )));
         } else if (currentTable[rowIndex].containsKey(cellIndex)) {
-          cells.add(DataCell(Text(currentTable[rowIndex][cellIndex]), showEditIcon: true, onTap: () => _startEditMode(tRow, rowIndex, cellIndex)));
+          cells.add(DataCell(Text(currentTable[rowIndex][cellIndex]),
+              showEditIcon: true,
+              onTap: () => _startEditMode(tRow, rowIndex, cellIndex)));
         } else
-          cells.add(DataCell(Text("הוסף תרגום"), placeholder: true, showEditIcon: true, onTap: () => _startEditMode(tRow, rowIndex, cellIndex)));
+          cells.add(DataCell(Text("הוסף תרגום"),
+              placeholder: true,
+              showEditIcon: true,
+              onTap: () => _startEditMode(tRow, rowIndex, cellIndex)));
       }
       trowRows.add(new DataRow(cells: cells));
     }
@@ -168,8 +175,12 @@ class _TranslatePageState extends State<TranslatePage> {
                           icon: Icon(Icons.add),
                           label: Text("הוסף מילה לקבוצה"),
                           onPressed: () {
-                            trows.forEach((element) => element.selectedRow = element.selectedcell = null);
-                            setState(() => tRow.trowTable[tRow.trowTable.length > 0 ? tRow.trowTable.keys.last + 1 : 0] = {});
+                            trows.forEach((element) => element.selectedRow =
+                                element.selectedcell = null);
+                            setState(() => tRow.trowTable[
+                                tRow.trowTable.length > 0
+                                    ? tRow.trowTable.keys.last + 1
+                                    : 0] = {});
                           }),
                     ),
                     SizedBox(
@@ -191,6 +202,26 @@ class _TranslatePageState extends State<TranslatePage> {
                             setState(() => trows.removeAt(index));
                           }),
                     ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Tooltip(
+                      message: "פותח פופאפ",
+                      child: RaisedButton.icon(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                              color: Colors.purple[300],
+                            ),
+                          ),
+                          textColor: Colors.purple[300],
+                          icon: Icon(Icons.arrow_drop_down),
+                          label: Text("סייפגארד"),
+                          onPressed: () {
+                            showAlertDialog(context);
+                          }),
+                    ),
                   ],
                 ),
               ],
@@ -198,6 +229,31 @@ class _TranslatePageState extends State<TranslatePage> {
           ),
         ],
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text("This is my message."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
@@ -217,7 +273,8 @@ class _TranslatePageState extends State<TranslatePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_to_queue),
         onPressed: () {
-          trows.forEach((element) => element.selectedRow = element.selectedcell = null);
+          trows.forEach(
+              (element) => element.selectedRow = element.selectedcell = null);
           setState(() => trows.insert(0, new TRow(trowTable: {})));
         },
       ),

@@ -3,7 +3,7 @@ import 'package:tirgumim/models/user.dart';
 
 typedef OnRowSelect = void Function(int index);
 
-_showMaterialDialog() {
+_showMaterialDialog(context) {
   showDialog(
       context: context,
       builder: (_) => new AlertDialog(
@@ -41,7 +41,7 @@ class UserDataTableSource extends DataTableSource {
 
     return DataRow.byIndex(
       index: index, // DONT MISS THIS
-      onSelectChanged: (val) => _showMaterialDialog,
+      onSelectChanged: (context) => _showMaterialDialog,
       selected: true,
       cells: <DataCell>[
         DataCell(Text('${_user.id}')),
@@ -90,7 +90,9 @@ class UserDataTableSource extends DataTableSource {
     _userData.sort((a, b) {
       final aValue = getField(a);
       final bValue = getField(b);
-      return ascending ? Comparable.compare(aValue, bValue) : Comparable.compare(bValue, aValue);
+      return ascending
+          ? Comparable.compare(aValue, bValue)
+          : Comparable.compare(bValue, aValue);
     });
 
     notifyListeners();
