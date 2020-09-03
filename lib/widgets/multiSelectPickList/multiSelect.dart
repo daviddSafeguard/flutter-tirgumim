@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'multySelectDialog.dart';
 
-class MultiSelectFormField extends FormField<dynamic> {
+class MultiSelectChip extends FormField<dynamic> {
   final String titleText;
   final String hintText;
   final bool required;
@@ -21,7 +21,7 @@ class MultiSelectFormField extends FormField<dynamic> {
   final String okButtonLabel;
   final String cancelButtonLabel;
 
-  MultiSelectFormField(
+  MultiSelectChip(
       {FormFieldSetter<dynamic> onSaved,
       FormFieldValidator<dynamic> validator,
       int initialValue,
@@ -71,7 +71,8 @@ class MultiSelectFormField extends FormField<dynamic> {
                   if (existingItem != null) {
                     selectedOptions.add(Chip(
                       backgroundColor: Colors.transparent,
-                      shape: StadiumBorder(side: BorderSide(color: Colors.grey[500])),
+                      shape: StadiumBorder(
+                          side: BorderSide(color: Colors.grey[500])),
                       label: Text(
                         existingItem[textField],
                         overflow: TextOverflow.ellipsis,
@@ -85,55 +86,62 @@ class MultiSelectFormField extends FormField<dynamic> {
               return selectedOptions;
             }
 
-            return FilterChip(
-              showCheckmark: value != null && value.length > 0,
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: FilterChip(
+                showCheckmark: value != null && value.length > 0,
 
-              selected: value != null && value.length > 0,
-              label: new Text(
-                titleText,
-                style: TextStyle(color: value != null && value.length > 0 ? Colors.blue : Colors.blue[300]),
+                selected: value != null && value.length > 0,
+                label: new Text(
+                  titleText,
+                  style: TextStyle(
+                      color: value != null && value.length > 0
+                          ? Colors.blue
+                          : Colors.blue[300]),
+                ),
+
+                shape: StadiumBorder(
+                    side: BorderSide(
+                  color: Colors.blue[300],
+                )),
+
+                // shape: StadiumBorder(side: BorderSide(color: Colors.blueGrey)),
+                onSelected: (bool bvalue) async {
+                  if (isEnabled) {
+                    List initialSelected = value;
+                    if (initialSelected == null) {
+                      initialSelected = List();
+                    }
+
+                    final items = List<MultiSelectDialogItem<dynamic>>();
+                    dataSource.forEach((item) {
+                      items.add(MultiSelectDialogItem(
+                          item[valueField], item[textField]));
+                    });
+
+                    List selectedValues = await showDialog<List>(
+                      context: state.context,
+                      builder: (BuildContext context) {
+                        // FocusScope.of(context).();
+
+                        return MultiSelectDialog(
+                          title: titleText,
+                          okButtonLabel: okButtonLabel,
+                          cancelButtonLabel: cancelButtonLabel,
+                          items: items,
+                          initialSelectedValues: initialSelected,
+                          iconsList: iconsList,
+                        );
+                      },
+                    );
+                    if (change != null) change(selectedValues);
+                    if (selectedValues != null) {
+                      state.didChange(selectedValues);
+                      state.save();
+                    }
+                  }
+                },
               ),
-
-              shape: StadiumBorder(
-                  side: BorderSide(
-                color: Colors.blue[300],
-              )),
-
-              // shape: StadiumBorder(side: BorderSide(color: Colors.blueGrey)),
-              onSelected: (bool bvalue) async {
-                if (isEnabled) {
-                  List initialSelected = value;
-                  if (initialSelected == null) {
-                    initialSelected = List();
-                  }
-
-                  final items = List<MultiSelectDialogItem<dynamic>>();
-                  dataSource.forEach((item) {
-                    items.add(MultiSelectDialogItem(item[valueField], item[textField]));
-                  });
-
-                  List selectedValues = await showDialog<List>(
-                    context: state.context,
-                    builder: (BuildContext context) {
-                      // FocusScope.of(context).();
-
-                      return MultiSelectDialog(
-                        title: titleText,
-                        okButtonLabel: okButtonLabel,
-                        cancelButtonLabel: cancelButtonLabel,
-                        items: items,
-                        initialSelectedValues: initialSelected,
-                        iconsList: iconsList,
-                      );
-                    },
-                  );
-                  if (change != null) change(selectedValues);
-                  if (selectedValues != null) {
-                    state.didChange(selectedValues);
-                    state.save();
-                  }
-                }
-              },
             );
 
             // InputDecorator(

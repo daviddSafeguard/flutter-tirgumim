@@ -13,8 +13,12 @@ class ServerDataTable extends StatefulWidget {
 }
 
 class _ServerDataTableState extends State<ServerDataTable> {
-  Map<String, bool> selectedFilters = {"workers": false, "eqp": false, "bannot": false};
-  String selectedWorkers = "";
+  Map<String, bool> selectedFilters = {
+    "workers": false,
+    "eqp": false,
+    "bannot": false
+  };
+  String selectedWorkers = "", selectedExeptionType = "";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -43,7 +47,8 @@ class _ServerDataTableState extends State<ServerDataTable> {
                     padding: EdgeInsets.all(size.width * 0.01),
                     child: GridView.builder(
                       itemCount: 8,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4),
                       itemBuilder: (BuildContext context, int index) {
                         return new Card(
                           child: new GridTile(
@@ -57,7 +62,9 @@ class _ServerDataTableState extends State<ServerDataTable> {
                 ),
                 Flexible(
                   flex: 5,
-                  child: Padding(padding: EdgeInsets.all(size.width * 0.01), child: PieChartSample2()),
+                  child: Padding(
+                      padding: EdgeInsets.all(size.width * 0.01),
+                      child: PieChartSample2()),
                 )
               ]),
             ),
@@ -69,26 +76,63 @@ class _ServerDataTableState extends State<ServerDataTable> {
               showCheckboxColumn: true,
               rowsPerPage: 3,
               header: Row(children: [
-                MultiSelectFormField(
-                  change: (val) {},
+                MultiSelectChip(
+                  change: (val) {
+                    //if (val.length > 0) selectedWorkers = "";
+                  },
                   autovalidate: false,
                   titleText: "עובדים",
                   dataSource: [
-                    {"display": "חגית", "value": "123"},
-                    {"display": "דוד", "value": "456"},
-                    {"display": "שירה", "value": "789"}
+                    {"display": "כל העובדים", "value": "123"},
+                    {"display": "עובדים פעילים", "value": "456"},
+                    {"display": "עובדים לא פעילים", "value": "789"},
+                    {"display": "בלתי מורשים", "value": "101"}
                   ],
                   textField: 'display',
                   valueField: 'value',
                   okButtonLabel: 'OK',
                   cancelButtonLabel: 'Cancel',
-                  value: selectedWorkers != "" ? selectedWorkers.split(',') : null,
+                  value:
+                      selectedWorkers != "" ? selectedWorkers.split(',') : null,
                   hintText: 'Select your Options',
                   onSaved: (value) {
-                    if (value != null)
+                    if (value.length > 0) {
                       setState(() {
                         selectedWorkers = value.join(',');
                       });
+                    } else {
+                      setState(() {
+                        selectedExeptionType = "";
+                      });
+                    }
+                  },
+                ),
+                MultiSelectChip(
+                  change: (val) {},
+                  autovalidate: false,
+                  titleText: "סוג חריגה",
+                  dataSource: [
+                    {"display": "אישור עבודה בגובה", "value": "111"},
+                    {"display": "אשרת עבודה", "value": "222"},
+                    {"display": "אשרת שהייה", "value": "333"},
+                    {"display": "הסמכת אתת", "value": "444"},
+                    {"display": "רשיון מפעיל עגורן", "value": "555"},
+                    {"display": "רשיון נהיגה", "value": "666"}
+                  ],
+                  textField: 'display',
+                  valueField: 'value',
+                  okButtonLabel: 'OK',
+                  cancelButtonLabel: 'Cancel',
+                  value: selectedExeptionType != ""
+                      ? selectedExeptionType.split(',')
+                      : null,
+                  hintText: 'Select your Options',
+                  onSaved: (value) {
+                    if (value != null) {
+                      setState(() {
+                        selectedExeptionType = value.join(',');
+                      });
+                    }
                   },
                 ),
               ]),
@@ -103,18 +147,78 @@ class _ServerDataTableState extends State<ServerDataTable> {
               source: UserDataTableSource(
                 onRowSelect: (index) => print(index),
                 userData: [
-                  User(id: 1, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 2, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 3, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
+                  User(
+                      id: 1,
+                      name: "1",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 2,
+                      name: "2",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 3,
+                      name: "3",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 4,
+                      name: "4",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 5,
+                      name: "5",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 6,
+                      name: "6",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 7,
+                      name: "7",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 8,
+                      name: "8",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 9,
+                      name: "9",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 10,
+                      name: "10",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 11,
+                      name: "11",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin"),
+                  User(
+                      id: 12,
+                      name: "12",
+                      email: "a@a",
+                      phone: "1234567890",
+                      status: "admin")
                 ],
               ),
             ),
