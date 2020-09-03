@@ -25,26 +25,25 @@ class ColumnChart extends StatelessWidget {
     //   SalesData(2014, 200, 30),
     // ];
 
-    return Directionality(
-        textDirection: TextDirection.rtl,
-        child: Center(
-            child: Container(
-                child: SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
-                    // Chart title
-                    title: ChartTitle(text: 'Half yearly sales analysis'),
-                    // Enable legend
-                    legend: Legend(isVisible: true),
-                    // Enable tooltip
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    series: <LineSeries<SalesData, String>>[
-              LineSeries<SalesData, String>(
-                  dataSource: <SalesData>[SalesData('Jan', 35), SalesData('Feb', 28), SalesData('Mar', 34), SalesData('Apr', 32), SalesData('May', 40)],
-                  xValueMapper: (SalesData sales, _) => sales.year,
-                  yValueMapper: (SalesData sales, _) => sales.sales,
-                  // Enable data label
-                  dataLabelSettings: DataLabelSettings(isVisible: true))
-            ]))));
+    return Center(
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, mainAxisSize: MainAxisSize.max, children: [
+      SfCartesianChart(
+          primaryXAxis: CategoryAxis(),
+          // Chart title
+          title: ChartTitle(text: 'Half yearly sales analysis'),
+          // Enable legend
+          legend: Legend(isVisible: true),
+          // Enable tooltip
+          tooltipBehavior: TooltipBehavior(enable: true),
+          series: <LineSeries<SalesData, String>>[
+            LineSeries<SalesData, String>(
+                dataSource: <SalesData>[SalesData('Jan', 35), SalesData('Feb', 28), SalesData('Mar', 34), SalesData('Apr', 32), SalesData('May', 40)],
+                xValueMapper: (SalesData sales, _) => sales.year,
+                yValueMapper: (SalesData sales, _) => sales.sales,
+                // Enable data label
+                dataLabelSettings: DataLabelSettings(isVisible: true))
+          ])
+    ]));
 
     // SfCartesianChart(
     //         enableAxisAnimation: true,

@@ -1,9 +1,10 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:tirgumim/UI/serverDataTable/chart.dart';
+import 'package:tirgumim/widgets/graphs/chart.dart';
 import 'package:tirgumim/UI/serverDataTable/dataTableSource.dart';
 import 'package:tirgumim/models/user.dart';
+import 'package:tirgumim/widgets/graphs/donat.dart';
 
 class ServerDataTable extends StatefulWidget {
   @override
@@ -47,25 +48,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
               ),
               Flexible(
                 flex: 5,
-                child:ColumnChart()
-                    //  Column(
-                    //   children: [
-                    Row(
-                  children: [
-                    ColumnChart(),
-                    ColumnChart(),
-                    ColumnChart(),
-                    ColumnChart(),
-                  ],
-                ),
-                //   Row(
-                //     children: [
-                //       ColumnChart(),
-                //       ColumnChart(),
-                //     ],
-                //   ),
-                // ],
-                //   ),
+                child: PieChartSample2(),
               )
             ]),
           ),
