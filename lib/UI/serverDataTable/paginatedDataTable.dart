@@ -15,6 +15,20 @@ class ServerDataTable extends StatefulWidget {
 class _ServerDataTableState extends State<ServerDataTable> {
   Map<String, bool> selectedFilters = {"workers": false, "eqp": false, "bannot": false};
   String selectedWorkers = "";
+  List<User> users = [
+    User(id: 123, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 456, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 789, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,7 +71,15 @@ class _ServerDataTableState extends State<ServerDataTable> {
                 ),
                 Flexible(
                   flex: 5,
-                  child: Padding(padding: EdgeInsets.all(size.width * 0.01), child: PieChartSample2()),
+                  child: Padding(
+                      padding: EdgeInsets.all(size.width * 0.01),
+                      child: Row(
+                        children: [
+                          PieChartSample2(),
+                          PieChartSample2(),
+                          PieChartSample2(),
+                        ],
+                      )),
                 )
               ]),
             ),
@@ -65,9 +87,9 @@ class _ServerDataTableState extends State<ServerDataTable> {
               height: size.height * 0.02,
             ),
             PaginatedDataTable(
-              columnSpacing: MediaQuery.of(context).size.width / 6,
+              columnSpacing: (MediaQuery.of(context).size.width - 16) / 6,
               showCheckboxColumn: true,
-              rowsPerPage: 3,
+              rowsPerPage: 4,
               header: Row(children: [
                 MultiSelectFormField(
                   change: (val) {},
@@ -102,20 +124,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
               ],
               source: UserDataTableSource(
                 onRowSelect: (index) => print(index),
-                userData: [
-                  User(id: 1, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 2, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 3, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
-                  User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
-                ],
+                userData: selectedWorkers != "" ? users.where((user) => selectedWorkers.contains(user.id.toString())).toList() : users,
               ),
             ),
           ],
