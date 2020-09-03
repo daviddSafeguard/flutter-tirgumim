@@ -47,7 +47,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
               ),
               Flexible(
                 flex: 5,
-                child:
+                child:ColumnChart()
                     //  Column(
                     //   children: [
                     Row(
