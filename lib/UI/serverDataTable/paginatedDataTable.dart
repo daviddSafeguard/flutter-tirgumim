@@ -13,29 +13,19 @@ class ServerDataTable extends StatefulWidget {
 }
 
 class _ServerDataTableState extends State<ServerDataTable> {
-  Map<String, bool> selectedFilters = {
-    "workers": false,
-    "eqp": false,
-    "bannot": false
-  };
   String selectedWorkers = "", selectedExeptionType = "";
   List<User> users = [
-    User(
-        id: 123, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
-    User(
-        id: 456, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
-    User(
-        id: 789, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 123, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 456, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 789, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
     User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
     User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
     User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
     User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
     User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
     User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
-    User(
-        id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
-    User(
-        id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
+    User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
     User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
   ];
   @override
@@ -66,8 +56,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
                     padding: EdgeInsets.all(size.width * 0.01),
                     child: GridView.builder(
                       itemCount: 8,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
                       itemBuilder: (BuildContext context, int index) {
                         return new Card(
                           child: new GridTile(
@@ -117,49 +106,42 @@ class _ServerDataTableState extends State<ServerDataTable> {
                   valueField: 'value',
                   okButtonLabel: 'OK',
                   cancelButtonLabel: 'Cancel',
-                  value:
-                      selectedWorkers != "" ? selectedWorkers.split(',') : null,
+                  value: selectedWorkers != "" ? selectedWorkers.split(',') : null,
                   hintText: 'Select your Options',
                   onSaved: (value) {
-                    if (value.length > 0) {
-                      setState(() {
-                        selectedWorkers = value.join(',');
-                      });
-                    } else {
-                      setState(() {
-                        selectedExeptionType = "";
-                      });
-                    }
+                    if (value.length == 0) selectedExeptionType = "";
+                    setState(() {
+                      selectedWorkers = value.join(',');
+                    });
                   },
                 ),
-                MultiSelectChip(
-                  change: (val) {},
-                  autovalidate: false,
-                  titleText: "סוג חריגה",
-                  dataSource: [
-                    {"display": "אישור עבודה בגובה", "value": "111"},
-                    {"display": "אשרת עבודה", "value": "222"},
-                    {"display": "אשרת שהייה", "value": "333"},
-                    {"display": "הסמכת אתת", "value": "444"},
-                    {"display": "רשיון מפעיל עגורן", "value": "555"},
-                    {"display": "רשיון נהיגה", "value": "666"}
-                  ],
-                  textField: 'display',
-                  valueField: 'value',
-                  okButtonLabel: 'OK',
-                  cancelButtonLabel: 'Cancel',
-                  value: selectedExeptionType != ""
-                      ? selectedExeptionType.split(',')
-                      : null,
-                  hintText: 'Select your Options',
-                  onSaved: (value) {
-                    if (value != null) {
-                      setState(() {
-                        selectedExeptionType = value.join(',');
-                      });
-                    }
-                  },
-                ),
+                if (selectedWorkers != "")
+                  MultiSelectChip(
+                    change: (val) {},
+                    autovalidate: false,
+                    titleText: "סוג חריגה",
+                    dataSource: [
+                      {"display": "אישור עבודה בגובה", "value": "111"},
+                      {"display": "אשרת עבודה", "value": "222"},
+                      {"display": "אשרת שהייה", "value": "333"},
+                      {"display": "הסמכת אתת", "value": "444"},
+                      {"display": "רשיון מפעיל עגורן", "value": "555"},
+                      {"display": "רשיון נהיגה", "value": "666"}
+                    ],
+                    textField: 'display',
+                    valueField: 'value',
+                    okButtonLabel: 'OK',
+                    cancelButtonLabel: 'Cancel',
+                    value: selectedExeptionType != "" ? selectedExeptionType.split(',') : null,
+                    hintText: 'Select your Options',
+                    onSaved: (value) {
+                      if (value != null) {
+                        setState(() {
+                          selectedExeptionType = value.join(',');
+                        });
+                      }
+                    },
+                  ),
               ]),
               columns: [
                 DataColumn(label: Text("id")),
@@ -171,12 +153,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
               ],
               source: UserDataTableSource(
                 onRowSelect: (index) => print(index),
-                userData: selectedWorkers != ""
-                    ? users
-                        .where((user) =>
-                            selectedWorkers.contains(user.id.toString()))
-                        .toList()
-                    : users,
+                userData: selectedWorkers != "" ? users.where((user) => selectedWorkers.contains(user.id.toString())).toList() : users,
               ),
             ),
           ],
