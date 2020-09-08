@@ -82,6 +82,7 @@ class Api {
       print("SELECT $object, $url, STATUS CODE: " + response.statusCode.toString() + ", LENGTH: ${data.length}");
       return data;
     } catch (error) {
+      print(error);
       throw error;
     }
   }

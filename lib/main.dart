@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:tirgumim/AppStore/appStore.dart';
 import 'package:tirgumim/UI/fullTable.dart';
 import 'package:tirgumim/UI/serverDataTable/paginatedDataTable.dart';
 import 'package:tirgumim/UI/translatePage.dart';
@@ -44,29 +46,31 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue[700],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: 'פר תמונה'),
-              Tab(text: 'טבלה כוללת'),
-              Tab(text: 'טבלת שרת'),
-            ],
+    return ChangeNotifierProvider(
+        create: (_) => AppStore(),
+        child: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.blue[700],
+              bottom: TabBar(
+                tabs: [
+                  Tab(text: 'פר תמונה'),
+                  Tab(text: 'טבלה כוללת'),
+                  Tab(text: 'טבלת שרת'),
+                ],
+              ),
+              title: Text(title),
+            ),
+            body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                TranslatePage(),
+                FullTable(),
+                ServerDataTable(),
+              ],
+            ),
           ),
-          title: Text(title),
-        ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            TranslatePage(),
-            FullTable(),
-            ServerDataTable(),
-          ],
-        ),
-      ),
-    );
+        ));
   }
 }

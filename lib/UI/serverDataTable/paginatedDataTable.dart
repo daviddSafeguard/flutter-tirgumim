@@ -1,6 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
+import 'package:tirgumim/AppStore/appStore.dart';
 import 'package:tirgumim/widgets/graphs/chart.dart';
 import 'package:tirgumim/UI/serverDataTable/dataTableSource.dart';
 import 'package:tirgumim/models/user.dart';
@@ -13,25 +16,49 @@ class ServerDataTable extends StatefulWidget {
 }
 
 class _ServerDataTableState extends State<ServerDataTable> {
+  AppStore appStore;
+
   String selectedWorkers = "", selectedExeptionType = "";
-  List<User> users = [
-    User(id: 123, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 456, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 789, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
-    User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
-  ];
+  List<User> users;
+  bool isInit = true;
+  // List<User> users = [
+  //   User(id: 123, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 456, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 789, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
+  //   User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
+  // ];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      appStore.getAllUsers();
+    });
+    super.initState();
+  }
+
+  // @override
+  // void didChangeDependencies() {
+  //   appStore = Provider.of<AppStore>(context);
+  //   if (isInit) {
+  //     isInit = false;
+  //     appStore.getAllUsers();
+  //   }
+  //   super.didChangeDependencies();
+  // }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    appStore = Provider.of<AppStore>(context);
+    users = AppStore.users.values.toList();
     return Scaffold(
       appBar: AppBar(
         title: Text("טבלת שרת"),
