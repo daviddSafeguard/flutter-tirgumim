@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tirgumim/AppStore/appStore.dart';
 import 'package:tirgumim/models/user.dart';
 
 typedef OnRowSelect = void Function(int index);
@@ -24,11 +25,13 @@ class UserDataTableSource extends DataTableSource {
   UserDataTableSource({
     @required List<User> userData,
     @required this.onRowSelect,
+    this.appStore,
   })  : _userData = userData,
         assert(userData != null);
 
   final List<User> _userData;
   final OnRowSelect onRowSelect;
+  final AppStore appStore;
 
   @override
   DataRow getRow(int index) {
@@ -41,7 +44,7 @@ class UserDataTableSource extends DataTableSource {
 
     return DataRow.byIndex(
       index: index, // DONT MISS THIS
-      onSelectChanged: (val) => () {}, //_showMaterialDialog,
+      onSelectChanged: (val) => appStore.deleteUser(_userData[index]), //_showMaterialDialog,
       selected: false,
       cells: <DataCell>[
         DataCell(Text('${_user.id}')),

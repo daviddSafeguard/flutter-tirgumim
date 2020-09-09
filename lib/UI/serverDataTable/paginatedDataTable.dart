@@ -98,77 +98,81 @@ class _ServerDataTableState extends State<ServerDataTable> {
             SizedBox(
               height: size.height * 0.02,
             ),
-            PaginatedDataTable(
-              columnSpacing: (MediaQuery.of(context).size.width - 16) / 6,
-              showCheckboxColumn: true,
-              rowsPerPage: 4,
-              header: Row(children: [
-                MultiSelectChip(
-                  change: (val) {
-                    //if (val.length > 0) selectedWorkers = "";
-                  },
-                  autovalidate: false,
-                  titleText: "עובדים",
-                  dataSource: [
-                    {"display": "כל העובדים", "value": "123"},
-                    {"display": "עובדים פעילים", "value": "456"},
-                    {"display": "עובדים לא פעילים", "value": "789"},
-                    {"display": "בלתי מורשים", "value": "101"}
-                  ],
-                  textField: 'display',
-                  valueField: 'value',
-                  okButtonLabel: 'OK',
-                  cancelButtonLabel: 'Cancel',
-                  value: selectedWorkers != "" ? selectedWorkers.split(',') : null,
-                  hintText: 'Select your Options',
-                  onSaved: (value) {
-                    if (value.length == 0) selectedExeptionType = "";
-                    setState(() {
-                      selectedWorkers = value.join(',');
-                    });
-                  },
-                ),
-                if (selectedWorkers != "")
+            Stack(children: [
+              PaginatedDataTable(
+                columnSpacing: (MediaQuery.of(context).size.width - 16) / 6,
+                showCheckboxColumn: true,
+                rowsPerPage: 4,
+                header: Row(children: [
                   MultiSelectChip(
-                    change: (val) {},
+                    change: (val) {
+                      //if (val.length > 0) selectedWorkers = "";
+                    },
                     autovalidate: false,
-                    titleText: "סוג חריגה",
+                    titleText: "עובדים",
                     dataSource: [
-                      {"display": "אישור עבודה בגובה", "value": "111"},
-                      {"display": "אשרת עבודה", "value": "222"},
-                      {"display": "אשרת שהייה", "value": "333"},
-                      {"display": "הסמכת אתת", "value": "444"},
-                      {"display": "רשיון מפעיל עגורן", "value": "555"},
-                      {"display": "רשיון נהיגה", "value": "666"}
+                      {"display": "כל העובדים", "value": "123"},
+                      {"display": "עובדים פעילים", "value": "456"},
+                      {"display": "עובדים לא פעילים", "value": "789"},
+                      {"display": "בלתי מורשים", "value": "101"}
                     ],
                     textField: 'display',
                     valueField: 'value',
                     okButtonLabel: 'OK',
                     cancelButtonLabel: 'Cancel',
-                    value: selectedExeptionType != "" ? selectedExeptionType.split(',') : null,
+                    value: selectedWorkers != "" ? selectedWorkers.split(',') : null,
                     hintText: 'Select your Options',
                     onSaved: (value) {
-                      if (value != null) {
-                        setState(() {
-                          selectedExeptionType = value.join(',');
-                        });
-                      }
+                      if (value.length == 0) selectedExeptionType = "";
+                      setState(() {
+                        selectedWorkers = value.join(',');
+                      });
                     },
                   ),
-              ]),
-              columns: [
-                DataColumn(label: Text("id")),
-                DataColumn(label: Text("name")),
-                DataColumn(label: Text("email")),
-                DataColumn(label: Text("phone")),
-                DataColumn(label: Text("status")),
-                DataColumn(label: SizedBox.shrink()),
-              ],
-              source: UserDataTableSource(
-                onRowSelect: (index) => print(index),
-                userData: selectedWorkers != "" ? users.where((user) => selectedWorkers.contains(user.id.toString())).toList() : users,
+                  if (selectedWorkers != "")
+                    MultiSelectChip(
+                      change: (val) {},
+                      autovalidate: false,
+                      titleText: "סוג חריגה",
+                      dataSource: [
+                        {"display": "אישור עבודה בגובה", "value": "111"},
+                        {"display": "אשרת עבודה", "value": "222"},
+                        {"display": "אשרת שהייה", "value": "333"},
+                        {"display": "הסמכת אתת", "value": "444"},
+                        {"display": "רשיון מפעיל עגורן", "value": "555"},
+                        {"display": "רשיון נהיגה", "value": "666"}
+                      ],
+                      textField: 'display',
+                      valueField: 'value',
+                      okButtonLabel: 'OK',
+                      cancelButtonLabel: 'Cancel',
+                      value: selectedExeptionType != "" ? selectedExeptionType.split(',') : null,
+                      hintText: 'Select your Options',
+                      onSaved: (value) {
+                        if (value != null) {
+                          setState(() {
+                            selectedExeptionType = value.join(',');
+                          });
+                        }
+                      },
+                    ),
+                ]),
+                columns: [
+                  DataColumn(label: Text("id")),
+                  DataColumn(label: Text("name")),
+                  DataColumn(label: Text("email")),
+                  DataColumn(label: Text("phone")),
+                  DataColumn(label: Text("status")),
+                  DataColumn(label: SizedBox.shrink()),
+                ],
+                source: UserDataTableSource(
+                  appStore: appStore,
+                  onRowSelect: (index) => appStore.deleteUser(users[index]),
+                  userData: selectedWorkers != "" ? users.where((user) => selectedWorkers.contains(user.id.toString())).toList() : users,
+                ),
               ),
-            ),
+              if (appStore.isLoading) Center(child: LinearProgressIndicator())
+            ]),
           ],
         ),
       ),

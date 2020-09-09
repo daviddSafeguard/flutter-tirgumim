@@ -4,6 +4,7 @@ import 'package:tirgumim/models/user.dart';
 
 class AppStore extends ChangeNotifier {
   static List<User> users = [];
+  bool isLoading = false;
 
   Future<void> getAllUsers() async {
     await Future.delayed(const Duration(milliseconds: 1000), () async {
@@ -46,6 +47,16 @@ class AppStore extends ChangeNotifier {
     // }
     // print(users);
 
+    notifyListeners();
+  }
+
+  Future<void> deleteUser(User user) async {
+    isLoading = true;
+    notifyListeners();
+    await Future.delayed(const Duration(milliseconds: 1000), () async {
+      users.remove(user);
+    });
+    isLoading = false;
     notifyListeners();
   }
 }
