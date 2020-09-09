@@ -1,10 +1,6 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:tirgumim/AppStore/appStore.dart';
-import 'package:tirgumim/widgets/graphs/chart.dart';
 import 'package:tirgumim/UI/serverDataTable/dataTableSource.dart';
 import 'package:tirgumim/models/user.dart';
 import 'package:tirgumim/widgets/graphs/donat.dart';
@@ -23,22 +19,14 @@ class _ServerDataTableState extends State<ServerDataTable> {
   bool isInit = true;
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+  void didChangeDependencies() {
+    appStore = Provider.of<AppStore>(context);
+    if (isInit) {
+      isInit = false;
       appStore.getAllUsers();
-    });
-    super.initState();
+    }
+    super.didChangeDependencies();
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   appStore = Provider.of<AppStore>(context);
-  //   if (isInit) {
-  //     isInit = false;
-  //     appStore.getAllUsers();
-  //   }
-  //   super.didChangeDependencies();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +154,6 @@ class _ServerDataTableState extends State<ServerDataTable> {
                   DataColumn(label: SizedBox.shrink()),
                 ],
                 source: UserDataTableSource(
-                  appStore: appStore,
                   onRowSelect: (index) => appStore.deleteUser(users[index]),
                   userData: selectedWorkers != "" ? users.where((user) => selectedWorkers.contains(user.id.toString())).toList() : users,
                 ),

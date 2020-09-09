@@ -62,13 +62,14 @@ class _MyHomePageState extends State<MyHomePage> {
   //   super.didChangeDependencies();
   // }
 
-  // @override
-  // void initState() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //     //Api.login(email: "davidd@safeguard.co.il", password: "gg0546568544");
-  //   });
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Api.login(email: "arnonm", password: "arnon123");
+      // appStore.getAllUsers();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

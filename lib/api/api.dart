@@ -11,7 +11,7 @@ class Api {
     try {
       Uri loginUrl = Query.login({"loginName": email, "password": password});
       String path = loginUrl.toString().replaceAll(new RegExp(r"%09|%E2|%80|%8E"), "");
-      var response = await http.get(path).timeout(const Duration(seconds: 30));
+      var response = await http.get(path); //.timeout(const Duration(seconds: 30));
       print("LOGIN, status code: " + response.statusCode.toString() + " USERNAME: $email PASSWORD: $password");
       if (response.statusCode != 200) throw response;
       Map data = json.decode(response.body);
@@ -21,6 +21,20 @@ class Api {
     } catch (error) {
       print(error);
       throw error;
+    }
+  }
+
+  static Future fetchAlbum() async {
+    final response = await http.get('https://jsonplaceholder.typicode.com/albums/1');
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      print(json.decode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
     }
   }
 
