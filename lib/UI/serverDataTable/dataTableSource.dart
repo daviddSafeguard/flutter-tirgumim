@@ -53,7 +53,10 @@ class UserDataTableSource extends DataTableSource {
           IconButton(
             hoverColor: Colors.transparent,
             splashColor: Colors.transparent,
-            icon: const Icon(Icons.details),
+            icon: const Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
             onPressed: () => onRowSelect(index),
           ),
         ),

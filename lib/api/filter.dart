@@ -1,4 +1,3 @@
-
 class Filter {
   String key;
   String operator;
@@ -119,7 +118,7 @@ class Filter {
 class Query {
   static String sessionId;
   static Uri login(Map<String, String> params) {
-    params.addAll({"sessionId": sessionId, "output": "json"});
+    params.addAll({"output": "json"}); //"sessionId": sessionId,
     Uri schemeUri = new Uri(scheme: 'https', host: 'www.safeguardapps.com', path: '/rest/api/login', queryParameters: params);
     return schemeUri;
   }

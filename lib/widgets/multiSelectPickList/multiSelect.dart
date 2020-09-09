@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'multySelectDialog.dart';
 
@@ -71,8 +73,7 @@ class MultiSelectChip extends FormField<dynamic> {
                   if (existingItem != null) {
                     selectedOptions.add(Chip(
                       backgroundColor: Colors.transparent,
-                      shape: StadiumBorder(
-                          side: BorderSide(color: Colors.grey[500])),
+                      shape: StadiumBorder(side: BorderSide(color: Colors.grey[500])),
                       label: Text(
                         existingItem[textField],
                         overflow: TextOverflow.ellipsis,
@@ -88,59 +89,80 @@ class MultiSelectChip extends FormField<dynamic> {
 
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
-              child: FilterChip(
-                showCheckmark: value != null && value.length > 0,
+              child: Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: FilterChip(
+                      showCheckmark: value != null && value.length > 0,
 
-                selected: value != null && value.length > 0,
-                label: new Text(
-                  titleText,
-                  style: TextStyle(
-                      color: value != null && value.length > 0
-                          ? Colors.blue
-                          : Colors.blue[300]),
-                ),
+                      selected: value != null && value.length > 0,
+                      label: new Text(
+                        titleText,
+                        style: TextStyle(color: value != null && value.length > 0 ? Colors.blue : Colors.blue[300]),
+                      ),
 
-                shape: StadiumBorder(
-                    side: BorderSide(
-                  color: Colors.blue[300],
-                )),
+                      shape: StadiumBorder(
+                          side: BorderSide(
+                        color: Colors.blue[300],
+                      )),
 
-                // shape: StadiumBorder(side: BorderSide(color: Colors.blueGrey)),
-                onSelected: (bool bvalue) async {
-                  if (isEnabled) {
-                    List initialSelected = value;
-                    if (initialSelected == null) {
-                      initialSelected = List();
-                    }
+                      // shape: StadiumBorder(side: BorderSide(color: Colors.blueGrey)),
+                      onSelected: (bool bvalue) async {
+                        if (isEnabled) {
+                          List initialSelected = value;
+                          if (initialSelected == null) {
+                            initialSelected = List();
+                          }
 
-                    final items = List<MultiSelectDialogItem<dynamic>>();
-                    dataSource.forEach((item) {
-                      items.add(MultiSelectDialogItem(
-                          item[valueField], item[textField]));
-                    });
+                          final items = List<MultiSelectDialogItem<dynamic>>();
+                          dataSource.forEach((item) {
+                            items.add(MultiSelectDialogItem(item[valueField], item[textField]));
+                          });
 
-                    List selectedValues = await showDialog<List>(
-                      context: state.context,
-                      builder: (BuildContext context) {
-                        // FocusScope.of(context).();
+                          List selectedValues = await showDialog<List>(
+                            context: state.context,
+                            builder: (BuildContext context) {
+                              // FocusScope.of(context).();
 
-                        return MultiSelectDialog(
-                          title: titleText,
-                          okButtonLabel: okButtonLabel,
-                          cancelButtonLabel: cancelButtonLabel,
-                          items: items,
-                          initialSelectedValues: initialSelected,
-                          iconsList: iconsList,
-                        );
+                              return MultiSelectDialog(
+                                title: titleText,
+                                okButtonLabel: okButtonLabel,
+                                cancelButtonLabel: cancelButtonLabel,
+                                items: items,
+                                initialSelectedValues: initialSelected,
+                                iconsList: iconsList,
+                              );
+                            },
+                          );
+                          if (change != null) change(selectedValues);
+                          if (selectedValues != null) {
+                            state.didChange(selectedValues);
+                            state.save();
+                          }
+                        }
                       },
-                    );
-                    if (change != null) change(selectedValues);
-                    if (selectedValues != null) {
-                      state.didChange(selectedValues);
-                      state.save();
-                    }
-                  }
-                },
+                    ),
+                  ),
+                  Positioned(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.red,
+                      ),
+                      width: 20,
+                      height: 20,
+                      child: Center(
+                          child: Text(
+                        value != null ? value.length.toString() : '0',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                        ),
+                      )),
+                    ),
+                  )
+                ],
               ),
             );
 

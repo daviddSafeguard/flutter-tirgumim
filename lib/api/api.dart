@@ -19,6 +19,7 @@ class Api {
       print("SESSION ID: : " + data["sessionId"]);
       return Query.sessionId;
     } catch (error) {
+      print(error);
       throw error;
     }
   }
