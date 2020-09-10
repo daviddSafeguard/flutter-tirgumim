@@ -7,23 +7,6 @@ class AppStore extends ChangeNotifier {
   bool isLoading = false;
 
   Future<void> getAllUsers() async {
-    // await Future.delayed(const Duration(milliseconds: 1000), () async {
-    //   users = [
-    //     User(id: 123, name: "1", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 456, name: "2", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 789, name: "3", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 4, name: "4", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 5, name: "5", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 6, name: "6", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 7, name: "7", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 8, name: "8", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 9, name: "9", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 10, name: "10", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 11, name: "11", email: "a@a", phone: "1234567890", status: "admin"),
-    //     User(id: 12, name: "12", email: "a@a", phone: "1234567890", status: "admin")
-    //   ];
-    // });
-
     var selectedKeys = [
       "id",
       User.keys["NAME"],
