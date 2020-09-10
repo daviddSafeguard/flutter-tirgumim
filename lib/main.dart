@@ -51,21 +51,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isinit = true;
-  AppStore appStore;
-  // @override
-  // void didChangeDependencies() {
-  //   if (isinit) {
-  //     isinit = false;
-  //   appStore = Provider.of<AppStore>(context);
 
-  //   }
-  //   super.didChangeDependencies();
-  // }
+  AppStore appStore;
+  @override
+  void didChangeDependencies() async {
+    if (isinit) {
+      isinit = false;
+      await Api.login(email: "arnonm", password: "arnon123");
+      setState(() {
+        isinit = false;
+      });
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Api.login(email: "arnonm", password: "arnon123");
       // appStore.getAllUsers();
     });
     super.initState();
@@ -73,29 +75,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue[700],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: 'פר תמונה'),
-              Tab(text: 'טבלה כוללת'),
-              Tab(text: 'טבלת שרת'),
-            ],
-          ),
-          title: Text(widget.title),
-        ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            TranslatePage(),
-            FullTable(),
-            ServerDataTable(),
-          ],
-        ),
-      ),
-    );
+    return isinit
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : DefaultTabController(
+            length: 3,
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.blue[700],
+                bottom: TabBar(
+                  tabs: [
+                    Tab(text: 'פר תמונה'),
+                    Tab(text: 'טבלה כוללת'),
+                    Tab(text: 'טבלת שרת'),
+                  ],
+                ),
+                title: Text(widget.title),
+              ),
+              body: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  TranslatePage(),
+                  FullTable(),
+                  ServerDataTable(),
+                ],
+              ),
+            ),
+          );
   }
 }
