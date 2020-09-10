@@ -88,7 +88,7 @@ class _ServerDataTableState extends State<ServerDataTable> {
             ),
             Stack(children: [
               PaginatedDataTable(
-                columnSpacing: (MediaQuery.of(context).size.width - 16) / 6,
+                //columnSpacing: (MediaQuery.of(context).size.width - 16) / 6,
                 showCheckboxColumn: true,
                 rowsPerPage: 4,
                 header: Row(children: [

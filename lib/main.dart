@@ -56,7 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void didChangeDependencies() async {
     if (isinit) {
-      isinit = false;
       await Api.login(email: "arnonm", password: "arnon123");
       setState(() {
         isinit = false;
