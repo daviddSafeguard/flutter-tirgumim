@@ -5,6 +5,7 @@ import 'package:tirgumim/AppStore/appStore.dart';
 import 'package:tirgumim/UI/fullTable.dart';
 import 'package:tirgumim/UI/serverDataTable/paginatedDataTable.dart';
 import 'package:tirgumim/UI/translatePage.dart';
+import 'package:tirgumim/UI/workerDataTable/workersDataTable.dart';
 import 'package:tirgumim/api/api.dart';
 
 void main() {
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: CircularProgressIndicator(),
           )
         : DefaultTabController(
-            length: 3,
+            length: 4,
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.blue[700],
@@ -88,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Tab(text: 'פר תמונה'),
                     Tab(text: 'טבלה כוללת'),
                     Tab(text: 'טבלת שרת'),
+                    Tab(text: 'עובדים'),
                   ],
                 ),
                 title: Text(widget.title),
@@ -98,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   TranslatePage(),
                   FullTable(),
                   ServerDataTable(),
+                  WorkerDataTable(),
                 ],
               ),
             ),
