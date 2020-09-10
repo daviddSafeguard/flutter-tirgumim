@@ -39,6 +39,7 @@ dependencies:
   just_debounce_it: ^3.0.0+2
   syncfusion_flutter_charts: ^18.2.56
   fl_chart: ^0.11.1
+  fluro: ^1.6.3
   
 dev_dependencies:
   flutter_test:
