@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:tirgumim/AppStore/appStore.dart';
 import 'package:tirgumim/models/employee.dart';
 
+import 'addNewWorker.dart';
+
 typedef OnRowSelect = void Function(int index);
 
 class WorkerDataTableSource extends DataTableSource {
   WorkerDataTableSource({
     @required List<Employee> employeeData,
     @required this.onRowSelect,
+    @required this.context,
   })  : _employeeData = employeeData,
         assert(employeeData != null);
 
   final List<Employee> _employeeData;
   final OnRowSelect onRowSelect;
+  final BuildContext context;
 
   @override
   DataRow getRow(int index) {
@@ -25,7 +29,7 @@ class WorkerDataTableSource extends DataTableSource {
 
     return DataRow.byIndex(
       index: index, // DONT MISS THIS
-      onSelectChanged: (val) {}, //_showMaterialDialog,
+      onSelectChanged: (val) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => AddNewWorker(_employee))), //_showMaterialDialog,
       selected: false,
       cells: <DataCell>[
         DataCell(Text('${_employee.id}')),
@@ -77,9 +81,7 @@ class WorkerDataTableSource extends DataTableSource {
     _employeeData.sort((a, b) {
       final aValue = getField(a);
       final bValue = getField(b);
-      return ascending
-          ? Comparable.compare(aValue, bValue)
-          : Comparable.compare(bValue, aValue);
+      return ascending ? Comparable.compare(aValue, bValue) : Comparable.compare(bValue, aValue);
     });
 
     notifyListeners();
