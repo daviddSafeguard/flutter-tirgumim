@@ -22,7 +22,7 @@ class _WorkerDataTableState extends State<WorkerDataTable> {
     appStore = Provider.of<AppStore>(context);
     if (isInit) {
       isInit = false;
-      appStore.getAllUsers();
+      appStore.getAllEmploees();
     }
     super.didChangeDependencies();
   }
