@@ -29,7 +29,6 @@ class _WorkerDataTableState extends State<WorkerDataTable> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     appStore = Provider.of<AppStore>(context);
     employees = AppStore.employees;
     return Scaffold(
@@ -49,7 +48,7 @@ class _WorkerDataTableState extends State<WorkerDataTable> {
               PaginatedDataTable(
                 columnSpacing: (MediaQuery.of(context).size.width - 16) / 6,
                 showCheckboxColumn: true,
-                rowsPerPage: 4,
+                rowsPerPage: 10,
                 header: Row(children: [
                   MultiSelectChip(
                     change: (val) {
@@ -67,9 +66,7 @@ class _WorkerDataTableState extends State<WorkerDataTable> {
                     valueField: 'value',
                     okButtonLabel: 'OK',
                     cancelButtonLabel: 'Cancel',
-                    value: selectedWorkers != ""
-                        ? selectedWorkers.split(',')
-                        : null,
+                    value: selectedWorkers != "" ? selectedWorkers.split(',') : null,
                     hintText: 'Select your Options',
                     onSaved: (value) {
                       if (value.length == 0) selectedExeptionType = "";
@@ -95,9 +92,7 @@ class _WorkerDataTableState extends State<WorkerDataTable> {
                       valueField: 'value',
                       okButtonLabel: 'OK',
                       cancelButtonLabel: 'Cancel',
-                      value: selectedExeptionType != ""
-                          ? selectedExeptionType.split(',')
-                          : null,
+                      value: selectedExeptionType != "" ? selectedExeptionType.split(',') : null,
                       hintText: 'Select your Options',
                       onSaved: (value) {
                         if (value != null) {
@@ -117,13 +112,9 @@ class _WorkerDataTableState extends State<WorkerDataTable> {
                   DataColumn(label: SizedBox.shrink()),
                 ],
                 source: WorkerDataTableSource(
+                  context: context,
                   onRowSelect: (index) => {},
-                  employeeData: selectedWorkers != ""
-                      ? employees
-                          .where((employee) =>
-                              selectedWorkers.contains(employee.id.toString()))
-                          .toList()
-                      : employees,
+                  employeeData: selectedWorkers != "" ? employees.where((employee) => selectedWorkers.contains(employee.id.toString())).toList() : employees,
                 ),
               ),
               if (appStore.isLoading) Center(child: LinearProgressIndicator())
